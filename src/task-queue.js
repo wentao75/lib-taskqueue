@@ -2,18 +2,14 @@ const pino = require("pino");
 const numeral = require("numeral");
 
 const logger = pino({
-    // level: ,
+    level: process.env.LOGGER || "info",
     prettyPrint: {
         levelFirst: true,
-        translateTime: "SYS:standard",
+        translateTime: "SYS:yyyy-yy-dd HH:MM:ss.l",
         crlf: true,
     },
     prettifier: require("pino-pretty"),
 });
-
-if (process.env.LOGGER) {
-    logger.level = process.env.LOGGER;
-}
 
 /**
  * 使用一个最大并行maxWorker数量的方式执行任务，任务采用[ {caller, args } ]方式传入
@@ -86,7 +82,10 @@ function calculateEstimateTime(elapsed, finished, total) {
     time = Number.parseInt(time / 60);
     let min = time % 60;
 
-    let hour = Number.parseInt(time / 24);
+    let hour = Number.parseInt(time / 60);
+    // logger.debug(
+    //     `计算预计时间：elapsed=${elapsed}, finished=${finished}, total=${total}; 计算结果：time=${time}, ms=${ms}, sec=${sec}, min=${min}, hour=${hour}`
+    // );
     return `${numeral(hour).format("00")}:${numeral(min).format(
         "00"
     )}:${numeral(sec).format("00")}.${numeral(ms).format("000")}`;
