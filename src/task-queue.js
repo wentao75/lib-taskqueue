@@ -56,7 +56,11 @@ function executeTasks(tasks, maxWorker = 20, name = "默认任务队列") {
                         `【${name}】${i} - 完成第${index + 1}个任务！`
                     );
                     logger.info(
-                        `【${name}】 已经完成${finished}/${tasks.length}个任务，预计还需要时间：${est}`
+                        `【${name}】 已经完成${finished}/${
+                            tasks.length
+                        }个任务，已经使用时间：${formatTime(
+                            elapsed
+                        )}, 预计还需要时间：${est}`
                     );
                 }
 
@@ -72,7 +76,10 @@ function executeTasks(tasks, maxWorker = 20, name = "默认任务队列") {
 
 function calculateEstimateTime(elapsed, finished, total) {
     let time = (elapsed * (total - finished)) / finished;
+    return formatTime(time);
+}
 
+function formatTime(time) {
     time = Number.parseInt(time);
     let ms = time % 1000;
 
