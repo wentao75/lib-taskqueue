@@ -62,6 +62,7 @@ function executeTasks(tasks, maxWorker = 20, name = "默认任务队列") {
                             elapsed
                         )}, 预计还需要时间：${est}`
                     );
+                    logger.info("内存使用：%o", process.memoryUsage());
                 }
 
                 resolve();
