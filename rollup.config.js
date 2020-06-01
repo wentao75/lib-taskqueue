@@ -11,6 +11,7 @@ import pkg from "./package.json";
 
 export default {
     input: "src/task-queue.js",
+    external: ["pino", "numeral"],
     plugins: [
         resolve(),
         babel({
